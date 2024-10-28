@@ -1,0 +1,106 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXML2.java to edit this template
+ */
+package lifetime;
+
+import java.awt.Color;
+import java.net.URL;
+import java.util.ResourceBundle;
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+
+
+/**
+ *
+ * @author PICHAU
+ */
+public class FXMLDocumentController{
+
+    @FXML
+    private HBox backgroundLogin;
+
+    @FXML
+    private Button btnEntrar;
+
+    @FXML
+    private TextField entradaSenha;
+
+    @FXML
+    private TextField entradaUsuario;
+
+    @FXML
+    private ImageView imgLogo;
+
+    @FXML
+    private AnchorPane painelCentral;
+
+    @FXML
+    private Text txtSenha;
+
+    @FXML
+    private Text txtUsuario;
+
+    @FXML
+    private Label labelStage;
+
+    
+    @FXML
+    private Label labelOla;
+    
+     @FXML
+    private Label labelErro;
+    
+    
+    @FXML
+     private void acaoBotao(ActionEvent event) {
+        String usuario = entradaUsuario.getText();
+        String senha = entradaSenha.getText();
+        
+        Login loginService = new Login();
+       if (loginService.autenticar(usuario, senha)) {
+           labelOla.setText("Login efetuado com sucesso!");
+        try {
+            // Carregar a nova tela Painel.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLPainel.fxml"));
+            Parent painelParent = loader.load();
+            Scene painelScene = new Scene(painelParent);
+            
+            // Obter o estÃ¡gio atual e definir a nova cena
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(painelScene);
+            stage.setTitle("Painel"); // Defina o tÃ­tulo da nova tela
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            labelErro.setText("Erro ao carregar a tela do Painel!");
+            }
+        } else {
+            labelOla.setText("UsuÃ¡rio ou senha incorretos!");
+            // Aqui vocÃª pode adicionar lÃ³gica para mostrar um alerta ou mensagem de erro na interface
+        }
+    }
+ 
+ 
+    public void initialize(URL url, ResourceBundle rb) {
+        // TODO
+    }    
+    
+      
+    
+    
+}
